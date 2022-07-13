@@ -8,7 +8,6 @@ const {Client, MessageEmbed} = require("discord.js");
 const bot = new Client();
 const config = require("./config.json");
 const client = new Discord.Client({ partials: ["MESSAGE", "CHANNEL", "REACTION" ]});
-const commandFiles = fs.readdirSync('./Commands/').filter(file => file.endsWith('.js'));
 const memberCounter = require(`./Counters/memberCounter`)
 const youtubeView = require(`./Counters/youtubeView`)
 const youtubeSubscriber = require(`./Counters/youtubeSubscriber`)
@@ -18,11 +17,6 @@ client.events = new Discord.Collection();
 ['command_handler', 'event_handler'].forEach(handler =>{
 	require(`./handlers/${handler}`)(client, Discord);
 })
-
-for (const file of commandFiles) {
-	const command = require(`./Commands/${file}`);
-	client.commands.set(command.name, command);
-}
 
 client.on('guildMemberAdd', guildMember =>{
     let welcomeRole = guildMember.guild.roles.cache.find(role => role.name === 'RTV');
@@ -38,7 +32,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 	const yellowTeamEmoji = '🔴';
 	const blueTeamEmoji = '🟣';
 	const greenTeamEmoji = '⚪';
-
 	if (reaction.message.partial) await reaction.message.fetch();
 	if (reaction.partial) await reaction.fetch();
 	if (user.bot) return;
@@ -93,4 +86,5 @@ client.on('ready', () => {
 	memberCounter(client);
 	youtubeSubscriber(client);
 	youtubeView(client);
+	client.user.setActivity('Darling In The Franxx', {type: 'WATCHING'}).catch(console.error);
 })
