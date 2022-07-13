@@ -8,9 +8,9 @@ const {Client, MessageEmbed} = require("discord.js");
 const bot = new Client();
 const config = require("./config.json");
 const client = new Discord.Client({ partials: ["MESSAGE", "CHANNEL", "REACTION" ]});
-const memberCounter = require(`./Counters/memberCounter`)
-const youtubeView = require(`./Counters/youtubeView`)
-const youtubeSubscriber = require(`./Counters/youtubeSubscriber`)
+const memberCounter = require(`./counters/memberCounter`)
+const youtubeView = require(`./counters/youtubeView`)
+const youtubeSubscriber = require(`./counters/youtubeSubscriber`)
 
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
