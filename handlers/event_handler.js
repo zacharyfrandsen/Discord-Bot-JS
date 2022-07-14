@@ -6,7 +6,7 @@ module.exports = (client, Discord) => {
         for(const file of eventFiles){
             const event = require(`../events/${dirs}/${file}`);
             const eventName = file.split('.')[0];
-            client.on(eventName, event.bind(null, Discord, client));
+            client.on(eventName, event.bind(client, Discord, null));
         }
     }
     ['client', 'guild'].forEach(e => load_dir(e));

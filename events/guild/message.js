@@ -1,15 +1,12 @@
 require('dotenv').config();
 const fs = require('fs');
 const cooldowns = new Map();
-module.exports = (Discord, client, message) => {
+module.exports = (message, args, cmd, client, Discord) => {
     const prefix = process.env.PREFIX;
-    const args = message.content.slice(prefix.length).split(/ +/);
-    const cmd = args.shift().toLowerCase();
     const command = client.commands.get(cmd) ||
     client.commands.find(a => a.aliases && a.aliases.includes(cmd));
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-
     if(!command) return client.commands.get('help').execute(message, args, cmd, client, Discord)
 
     const validPermissions = [
@@ -68,7 +65,7 @@ module.exports = (Discord, client, message) => {
         const args = message.content.slice(prefix.length).split(/ +/);
         const command = args.shift().toLowerCase();
         if (command === 'reactionrole') {
-            client.commands.get('reactionrole').execute(message, args, Discord, client);
+            client.commands.get('reactionrole').execute(message, args, cmd, client, Discord);
         } 
         const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
         for (const file of commandFiles) {
