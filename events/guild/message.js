@@ -1,7 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const cooldowns = new Map();
-module.exports = (message, client, Discord) => {
+module.exports = (Discord, client, message) => {
     const prefix = process.env.PREFIX;
     const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
 
