@@ -8,5 +8,5 @@ module.exports = async (client) => {
         const channel = guild.channels.cache.get('865336608226803732');
         channel.setName(`Views : ${viewCount.items[0].statistics.viewCount.toLocaleString()}`);
         console.log('Updating View Count');
-    }, 3600000);
+    }, 1800000);
 }

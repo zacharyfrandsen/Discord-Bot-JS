@@ -8,5 +8,5 @@ module.exports = async (client) => {
         const channel = guild.channels.cache.get('865335655872856144');
         channel.setName(`YouTube : ${subscriberCount.items[0].statistics.subscriberCount.toLocaleString()}`);
         console.log('Updating Subscriber Count');
-    }, 3600000);
+    }, 1800000);
 }
