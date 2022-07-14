@@ -1,8 +1,9 @@
 module.exports = {
     name: 'unmute',
     permissions: ["ADMINISTRATOR", "MANAGE_MESSAGES", "CONNECT"],
+    cooldown: 2,
     description: "This unmutes a member",
-    execute(message){
+    execute(message, args, cmd, client, Discord){
         const target = message.mentions.users.first();
         if(target){
             let mainRole = message.guild.roles.cache.find(role => role.name === 'Member');

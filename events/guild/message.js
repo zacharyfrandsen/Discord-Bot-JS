@@ -1,12 +1,17 @@
 require('dotenv').config();
 const fs = require('fs');
+const { cooldown } = require('../../commands/music');
 const cooldowns = new Map();
 module.exports = (client, Discord, message) => {
     const prefix = process.env.PREFIX;
+
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const cmd = args.shift().toLowerCase();
+
     const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
 
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
-    if(!command) return client.commands.get('help').execute(message, args, cmd, client, Discord)
+    if(!message.content.startsWith(prefix) || message.author.bot) return;
+    if(!command) return client.commands.get('help').execute(message, args, cmd, client, Discord);
 
     const validPermissions = [
         "CREATE_INSTANT_INVITE",
@@ -66,17 +71,36 @@ module.exports = (client, Discord, message) => {
         if (command === 'reactionrole') {
             client.commands.get('reactionrole').execute(message, args, cmd, client, Discord);
         } 
-        const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-        for (const file of commandFiles) {
-          const command = require(`./commands/${file}`);
-          client.commands.set(command.name, command);
-        }
       
     });
 
-    try {
-        command.execute(message, args, cmd, client, Discord);
-    } catch (err) {
-        message.reply("There was an error trying to execute that command!");
-    }
+    if(!cooldowns.has(command.name)){
+      cooldowns.set(command.name, new Discord.Collection());
+  }
+
+  const currentTime = Date.now();
+  const timeStamps = cooldowns.get(command.name);
+  const cooldownAmount = (command.cooldown) * 1000;
+
+  if(timeStamps.has(message.author.id)){
+      const expirationTime = timeStamps.get(message.author.id) + cooldownAmount;
+
+      if(currentTime < expirationTime){
+          const timeLeft = (expirationTime - currentTime) / 1000;
+
+          return message.reply(`Please wait ${timeLeft.toFixed(1)} more seconds before using ${command.name}`);
+      }
+  }
+
+  timeStamps.set(message.author.id, currentTime);
+
+  setTimeout(() => timeStamps.delete(message.author.id), cooldownAmount);
+
+  try{
+      command.execute(message,args, cmd, client, Discord);
+  } catch (err){
+      message.reply("There was an error trying to execute this command!");
+      console.log(err);
+  }
+
 }

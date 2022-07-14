@@ -1,8 +1,9 @@
 module.exports = {
     name: 'mute',
     permissions: ["ADMINISTRATOR", "MANAGE_MESSAGES", "CONNECT"],
+    cooldown: 2,
     description: "This mutes a member",
-    execute(message, args) {
+    execute(message, args, cmd, client, Discord) {
         const target = message.mentions.users.first();
         if (target) {
  

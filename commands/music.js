@@ -7,18 +7,19 @@ module.exports = {
     aliases: ['play', 'pl', 'skip', 'stop'],
     cooldown: 0,
     description: 'Advanced music bot',
-    async execute(message, args, cmd){
+    async execute(message, args, cmd, client, Discord){
 
         const voice_channel = message.member.voice.channel;
-        if (!voice_channel) return message.channel.send('You need to be in a channel to execute this command!');
+        const emoji = '😭';
+        if (!voice_channel) return message.reply(`You need to be in a voice channel for me to work ${emoji}`);
         const permissions = voice_channel.permissionsFor(message.client.user);
-        if (!permissions.has('CONNECT')) return message.channel.send('You dont have the correct permissins');
-        if (!permissions.has('SPEAK')) return message.channel.send('You dont have the correct permissins');
-
+        if (!permissions.has('CONNECT')) return message.reply('You dont have the correct permissins');
+        if (!permissions.has('SPEAK')) return message.reply('You dont have the correct permissins');
+        
         const server_queue = queue.get(message.guild.id);
 
         if (cmd === 'play'){
-            if (!args.length) return message.channel.send('You need to send the second argument!');
+            if (!args.length) return message.reply('You need to send the second argument!');
             let song = {};
 
             if (ytdl.validateURL(args[0])) {

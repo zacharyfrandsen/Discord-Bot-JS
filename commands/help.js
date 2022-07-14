@@ -2,8 +2,9 @@ module.exports = {
     name: 'help',
     aliases: ["help", "info"],
     permissions: [],
+    cooldown: 2,
     description: "Help",
-    async execute(Discord) {
+    async execute(message, args, cmd, client, Discord) {
         let embed = new Discord.MessageEmbed()
         .setColor('#e42643')
         .setTitle('HERE IS A LIST OF COMMANDS!')
@@ -29,5 +30,6 @@ module.exports = {
             inline: true,
           },
         ])
+        if ('help') return message.reply(embed);
         }
     }
