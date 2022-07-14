@@ -1,9 +1,9 @@
 module.exports = {
     name: 'help',
     aliases: ["help", "info"],
-    permissions: ["ADMINISTRATOR", "MANAGE_MESSAGES", "CONNECT"],
-    description: "Help Embed",
-    async execute(Discord) {
+    permissions: [],
+    description: "Help",
+    async execute(message, client, Discord) {
         let embed = new Discord.MessageEmbed()
         .setColor('#e42643')
         .setTitle('HERE IS A LIST OF COMMANDS!')
