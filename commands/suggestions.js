@@ -10,13 +10,13 @@ module.exports = {
 
         let messageArgs = args.join(' ');
         const embed = new Discord.MessageEmbed()
-        .setColor('FADF2E')
+        .setColor('#194973')
         .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
         .setDescription(messageArgs);
-
+        
         channel.send(embed).then((msg) =>{
-            msg.react('👍');
-            msg.react('👎');
+            msg.react('🟩');
+            msg.react('🟥');
             message.delete();
         }).catch((err)=>{
             console.log(err);

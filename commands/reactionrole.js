@@ -14,7 +14,7 @@ module.exports = {
         const greenTeamEmoji = '⚪';
 
         let embed = new Discord.MessageEmbed()
-            .setColor('#e42643')
+            .setColor('#194973')
             .setTitle('Which notifications do you want!')
             .setDescription('Choosing a notification list will allow you to interact with the rest of the server!\n\n\n'
                 + `${yellowTeamEmoji} for team Youtube\n\n`

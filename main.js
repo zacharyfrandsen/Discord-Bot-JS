@@ -3,6 +3,7 @@ const cheerio = require ('cheerio');
 const fetch = require('node-fetch');
 const ms = require('ms');
 const fs = require('fs');
+const canvas = require('canvas');
 const dotenv = require('dotenv').config();
 const {Client, MessageEmbed} = require("discord.js");
 const bot = new Client();
