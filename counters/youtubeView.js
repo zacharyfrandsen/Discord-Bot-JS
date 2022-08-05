@@ -7,6 +7,5 @@ module.exports = async (client) => {
         const viewCount = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${youtubeUser}&key=${youtubeKey}`).then(i => i.json());
         const channel = guild.channels.cache.get('865336608226803732');
         channel.setName(`Views : ${viewCount.items[0].statistics.viewCount.toLocaleString()}`);
-        console.log('Updating View Count');
-    }, 1800000);
+    }, 86400000);
 }

@@ -7,6 +7,5 @@ module.exports = async (client) => {
         const subscriberCount = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${youtubeUser}&key=${youtubeKey}`).then(i => i.json());
         const channel = guild.channels.cache.get('865335655872856144');
         channel.setName(`YouTube : ${subscriberCount.items[0].statistics.subscriberCount.toLocaleString()}`);
-        console.log('Updating Subscriber Count');
-    }, 1800000);
+    }, 86400000);
 }
